@@ -1,1 +1,1 @@
-*.secrets.properties
+config/secrets.ini
