@@ -2,6 +2,24 @@
 
 Proof of concept for a system that recommends photos based on previous photos you liked
 
+# Introduction
+
+This is based off a system called Flexplore written by Lars Pohlmann back around 2008: https://www.flickr.com/groups/flexplore/ 
+
+This script is based off his public posts about how it worked, in particular https://www.flickr.com/groups/709526@N23/discuss/72157604460161681/72157604455830572
+
+The idea behind Flexplore was to function as a better version of Flickr's Explore feature, which purports to help users discover high-quality work from around Flickr. Where Explore scored photos globally based on what Flickr calls "Interestingness", Flexplore tailored its output to each user specifically. The intuition behind its operation was that if I like a photo taken by someone, I will probably like other photos they took. But, it's really *their* favorite photos by other people that demonstrate what they're trying to accomplish. So, if I like one of their photos, I'll probably *really* like what they're shooting for. 
+
+Thus, Flexplore scored the people who took the photos I like by how many favorites we have in common (a proxy for how similar our tastes are). Then it scored the photos *they* like by the other people who favorited them, and shows me the top-scoring photos which are thus defined by my own idiosyncratic tastes.
+
+It was pretty successful at showing people work that was interesting to them that they hadn't seen before: https://www.flickr.com/groups/94761711@N00/discuss/72157604058004797/
+
+Lars later added a feature for "show my more photos like this" that finds photos with similar people who favorited them: https://www.flickr.com/groups/flexplore/discuss/72157630056207294/
+
+I wrote this to see if I could get the general idea working before I took a run at trying to build a scalable system suitable for many users.
+
+I also noticed that it's pretty trivial to generate a list of top-scoring users, and I found in my personal experience that I enjoyed both their work and their favorites, so I included that in the output as well.
+
 # Instructions
 
 ## Step 1
