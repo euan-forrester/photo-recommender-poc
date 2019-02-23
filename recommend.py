@@ -138,7 +138,7 @@ def get_neighbor_score(total_favorites, common_favorites):
     # Took this formula from https://www.flickr.com/groups/709526@N23/discuss/72157604460161681/72157604455830572
     return 150 * math.sqrt(common_favorites / (total_favorites + 250))
 
-parser = argparse.ArgumentParser(description="Recommend Flickr photos based on your favoritess")
+parser = argparse.ArgumentParser(description="Recommend Flickr photos based on your favorites")
 
 parser.add_argument("-d", "--debug", action="store_true", dest="debug", default=False, help="Display debug information")
 required_arguments = parser.add_argument_group('required arguments')
