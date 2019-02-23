@@ -6,6 +6,8 @@ import math
 import requests
 import argparse
 import logging
+from django.core.cache import cache
+from django.conf import settings
 
 ENVIRONMENT = "prod"
 
@@ -21,6 +23,26 @@ flickr_api_max_favorites_per_call   = config.getint(ENVIRONMENT, "flickr.api.fav
 flickr_api_max_favorites_to_get     = config.getint(ENVIRONMENT, "flickr.api.favorites.maxtoget")
 flickr_user_id                      = config.get(ENVIRONMENT, "flickr.user.id")
 num_results                         = config.getint(ENVIRONMENT, "results.num")
+memcached_location                  = config.get(ENVIRONMENT, "memcached.location")
+memcached_ttl                       = config.getint(ENVIRONMENT, "memcached.ttl")
+
+def make_memcached_key(key, key_prefix, version):
+    # Similar to the default key function, except that we translate the key first. The FlickrAPI package
+    # uses objects as keys, then calls repr() on it to translate it into a string. This means the string will have 
+    # spaces in the name, but memcached won't accept spaces in the key names, so we have to replace those
+
+    translated_key = repr(key).replace(' ', '$')
+
+    return '%s:%s:%s' % (key_prefix, version, translated_key)
+
+settings.configure(CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': memcached_location,
+        'KEY_FUNCTION': make_memcached_key,
+        'TIMEOUT': memcached_ttl,
+    }
+})
 
 def get_favorites_page(flickr, user_id, max_retries, max_per_call, page_number):
     num_retries = 0
@@ -95,7 +117,8 @@ if args.debug:
 
 logging.basicConfig(format='%(levelname)s: %(message)s', level=log_level)
 
-flickr = flickrapi.FlickrAPI(flickr_api_key, flickr_api_secret, format='parsed-json', cache=True) # TODO: May want to explore more cacheing options later: https://stuvel.eu/flickrapi-doc/6-caching.html
+flickr = flickrapi.FlickrAPI(flickr_api_key, flickr_api_secret, format='parsed-json', cache=True)
+flickr.cache = cache
 
 # To locate photos that the user may find interesting, we first build a set of "neighbors" to this user.
 # A "neighbor" is someone who took a photo that the user favorited.
