@@ -69,3 +69,31 @@ Run the script
 ## Step 5
 
 Open the output file in a web browser and enjoy some photos
+
+# Output
+
+My Flickr account is: https://www.flickr.com/photos/euan_forrester/
+
+Here's my top 5 photos:
+
+<a href=https://www.flickr.com/photos/76024502@N00/3063701855/><img src=https://farm4.staticflickr.com/3273/3063701855_cc2beaba67_b.jpg/></a><br/>
+
+<a href=https://www.flickr.com/photos/34931770@N00/510591798/><img src=https://farm1.staticflickr.com/189/510591798_43614be8cd_b.jpg/></a><br/>
+
+<a href=https://www.flickr.com/photos/88859707@N00/5987578841/><img src=https://farm7.staticflickr.com/6018/5987578841_6863d519bb_b.jpg/></a><br/>
+
+<a href=https://www.flickr.com/photos/36529834@N00/2693543918/><img src=https://farm4.staticflickr.com/3129/2693543918_e241fa23df.jpg/></a><br/>
+
+<a href=https://www.flickr.com/photos/72245483@N00/2554939385/><img src=https://farm4.staticflickr.com/3093/2554939385_1964905727_b.jpg/></a><br/>
+
+And my top 5 other users:
+
+<img src=http://farm4.staticflickr.com/3519/buddyicons/30382413@N08.jpg/>Street Photography www.osiowy.pl - <a href=https://www.flickr.com/photos/zbigniew-osiowy/>Photos</a> - <a href=https://www.flickr.com/photos/zbigniew-osiowy/favorites>Favorites</a><br/>
+
+<img src=http://farm1.staticflickr.com/174/buddyicons/7332878@N05.jpg/>nick hinch - <a href=https://www.flickr.com/photos/7332878@N05/>Photos</a> - <a href=https://www.flickr.com/photos/7332878@N05/favorites>Favorites</a><br/>
+
+<img src=http://farm3.staticflickr.com/2047/buddyicons/12798758@N04.jpg/>Aziz . - <a href=https://www.flickr.com/photos/yazdaniphotography/>Photos</a> - <a href=https://www.flickr.com/photos/yazdaniphotography/favorites>Favorites</a><br/>
+
+<img src=http://farm1.staticflickr.com/118/buddyicons/92319918@N00.jpg/>Craig Buchan - <a href=https://www.flickr.com/photos/buchanear/>Photos</a> - <a href=https://www.flickr.com/photos/buchanear/favorites>Favorites</a><br/>
+
+<img src=http://farm1.staticflickr.com/959/buddyicons/15699212@N04.jpg/>Vasilikos Lukas - <a href=https://www.flickr.com/photos/vasilikos/>Photos</a> - <a href=https://www.flickr.com/photos/vasilikos/favorites>Favorites</a><br/>
