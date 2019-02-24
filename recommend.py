@@ -45,15 +45,15 @@ settings.configure(CACHES = {
     }
 })
 
-def get_person_info(flickr, user_id, max_retries):
+def call_with_retries(lambda_to_call, max_retries):
     num_retries = 0
-    person_info = None
+    result = None
     success = False
     error = None
 
     while (num_retries < max_retries) and not success:
         try:
-            person_info = flickr.people.getInfo(user_id=user_id)
+            result = lambda_to_call()
             success = True
 
         except flickrapi.exceptions.FlickrError as e:
@@ -74,40 +74,24 @@ def get_person_info(flickr, user_id, max_retries):
 
     if not success:
         raise error
+
+    return result 
+
+def get_person_info(flickr, user_id, max_retries):
+    
+    lambda_to_call = lambda: flickr.people.getInfo(user_id=user_id)
+
+    person_info = call_with_retries(lambda_to_call, max_retries)
 
     logging.info("Just called get_person_info for user %s" % (user_id))
 
     return person_info
 
 def get_favorites_page(flickr, user_id, max_retries, max_per_call, page_number):
-    num_retries = 0
-    favorites = None
-    success = False
-    error = None
 
-    while (num_retries < max_retries) and not success:
-        try:
-            favorites = flickr.favorites.getList(user_id=user_id, extras='url_l,url_m', per_page=max_per_call, page=page_number)
-            success = True
+    lambda_to_call = lambda: flickr.favorites.getList(user_id=user_id, extras='url_l,url_m', per_page=max_per_call, page=page_number)
 
-        except flickrapi.exceptions.FlickrError as e:
-            # You get random 502s when making lots of calls to this API, which apparently indicate rate limiting: 
-            # https://www.flickr.com/groups/51035612836@N01/discuss/72157646430151464/ 
-            # Sleeping between calls didn't seem to always solve it, but retrying does
-            # There doesn't seem to be a way to determine that this happened from the exception object other than to test
-            # the string against "do_request: Status code 502 received"
-            logging.debug("Got FlickrError %s" % (e))
-            error = e
-
-        except requests.exceptions.ConnectionError as e:
-            logging.debug("Got ConnectionError %s" % (e))
-            # Sometimes we see a random "Remote end closed connection without response" error
-            error = e
-
-        num_retries += 1
-
-    if not success:
-        raise error
+    favorites = call_with_retries(lambda_to_call, max_retries)
 
     logging.info("Just called get_favorites_page for page %d with max_per_call %d and returning %d faves" % (page_number, max_per_call, len(favorites['photos']['photo'])))
 
